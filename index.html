@@ -1,9 +1,12 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
     <head>
         <title>Launch Checklist</title>
         <link rel = "stylesheet" type = "text/css" href = "styles.css" />
-        <script src = "script.js"></script>
+        <script src = "script.js">               
+        </script>
+        <!--<meta http-equiv = "refresh" content= "30">-->
+        
     </head>
     <body>
         <h1>Launch Checklist Form</h1>
@@ -11,27 +14,29 @@
             <!-- Fetch some planetary data -->
         </div> 
         <div id="launchForm">
-            <form>
+            <form >
                 <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; margin: 8 0;">
-                    <label>Pilot Name <input type="text" name="pilotName" id="pilotName"/></label>
+                    <label>Pilot Name <input type="text" name="pilotName" id="pilotName"></label>
+                   
                 </div>
                 <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; margin: 8 0;">
-                    <label>Co-pilot Name <input type="text" name="copilotName"/></label>
+                    <label>Co-pilot Name <input type="text" name="copilotName" id ="copilotName"/></label>
                 </div>
                 <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; margin: 8 0;">
-                    <label>Fuel Level (L) <input type="text" name="fuelLevel"/></label> 
+                    <label>Fuel Level (L) <input type="text" name="fuelLevel" id ="fuelLevel" /></label> 
                 </div>
                 <div style="display:flex; flex-direction: row; justify-content: center; align-items: center; margin: 8 0;">
-                    <label>Cargo Mass (kg) <input type="text" name="cargoMass"/></label>
+                    <label>Cargo Mass (kg) <input type="text" name="cargoMass" id ="cargoMass" /></label>
                 </div>
                 <button id="formSubmit">Submit</button>
             </form>
+
         </div>
         <div id="launchStatusCheck">
             <h2 id="launchStatus">Awaiting Information Before Launch</h2>
             <div  id="faultyItems">
                 <ol>
-                    <li id="pilotStatus">Pilot Ready</li>
+                    <li id="pilotStatus">Pilot Ready </li>
                     <li id="copilotStatus">Co-pilot Ready</li>
                     <li id="fuelStatus">Fuel level high enough for launch</li>
                     <li id="cargoStatus">Cargo mass low enough for launch</li>
@@ -39,4 +44,79 @@
             </div>
         </div>    
     </body>
+    
+    <script>
+           
+        window.addEventListener("load",function (){
+                let form = document.getElementById("formSubmit");
+                form.addEventListener("click" ,function(event){
+                    event.preventDefault()
+                    
+                    let userInput = document.querySelector("input[name=pilotName]");
+                    let userInput1 = document.querySelector("input[name=copilotName]");
+                    let userInput2 = document.querySelector("input[name=fuelLevel]")
+                    let userInput3 = document.querySelector("input[name=cargoMass]");
+
+                       let numForce = Number(userInput.value);
+                       let numForce1 = Number(userInput1.value);
+                       let numForce2 = Number(userInput2.value);
+                        let numForce3 = Number(userInput3.value);
+                     if(userInput.value === "" || userInput1.value === "" || userInput2.value === ""||userInput3.value===""){
+                        alert("All fields Required");
+                     } 
+                      else if( !isNaN(numForce) || !isNaN(numForce1) || isNaN(numForce2) || isNaN(numForce3)){
+                        alert("Must be appropriate values in each field!");
+                         }
+
+                 let updateList = document.getElementById("faultyItems");
+                         updateList.style.visibility = "visible"
+
+                    let changeColor = document.getElementById("launchStatus")
+
+                let faultyCheck = document.getElementById("pilotStatus")
+                         faultyCheck.innerHTML = `Pilot ${userInput.value} is ready.`
+                
+                let faultyCheck1 = document.getElementById("copilotStatus")
+                         faultyCheck1.innerHTML = `Co-Pilot ${userInput1.value} ready.`
+
+                let faultyCheck2 = document.getElementById("fuelStatus")
+                         faultyCheck2.innerHTML = `Fuel level ${userInput2.value} high enough for launch`
+                         
+                let faultyCheck3 = document.getElementById("cargoStatus")
+                         faultyCheck3.innerHTML = `Cargo mass ${userInput3.value} low enough for launch`
+
+                         console.log(faultyCheck2)
+                         console.log(faultyCheck3)
+
+
+
+
+                         if (numForce2 >= 10000 && numForce3 >= 10000){
+                                 changeColor.style.color = "red"
+                                 changeColor.innerHTML = "NOT READY"
+                                 faultyCheck2.innerHTML = `Fuel level ${userInput2.value} is suffcient`
+                                 faultyCheck3.innerHTML = `Cargo mass ${userInput3.value} is too high`  
+
+                         }  else if (numForce2 < 10000 && numForce3 <= 10000){
+                                 changeColor.style.color = "red"
+                                 changeColor.innerHTML = "NOT READY"
+                                 faultyCheck2.innerHTML = `Fuel level ${userInput2.value} is too low`
+                                 faultyCheck3.innerHTML = `Cargo mass ${userInput3.value} is suffcient`  
+
+                         }
+                         else if (numForce2 <= 10000 && numForce3 >= 10000){
+                                 changeColor.style.color = "red"
+                                 changeColor.innerHTML = "NOT READY"
+                                 faultyCheck2.innerHTML = `Fuel level ${userInput2.value} is too low`
+                                 faultyCheck3.innerHTML = `Cargo mass ${userInput3.value} is too high`     
+                      
+                                } else {
+                                     changeColor.style.color ="green"
+                                        changeColor.innerHTML = "Ready for takeoff!!"
+                         }
+            })
+        })
+            
+
+        </script>
 </html>
